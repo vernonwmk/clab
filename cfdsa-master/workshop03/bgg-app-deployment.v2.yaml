@@ -2,31 +2,35 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-   name: bgg-app-deployment
+   name: bgg-app-deploymentv2
    namespace: workshop02
 
 spec:
    replicas: 2
+   
+   strategy:
+      type: RollingUpdate
+      rollingUpdate:
+         maxSurge: 1
+         maxUnavailable: 1
+   
    selector:
       matchLabels:
          app.kubernetes.io/name: bgg-app-pod
-         app.kubernetes.io/version: "v1"
+         app.kubernetes.io/version: "v2"
 
    template:
       metadata:
          name: bgg-app-pod
          labels:
             app.kubernetes.io/name: bgg-app-pod
-            app.kubernetes.io/version: "v1"
+            app.kubernetes.io/version: "v2"
             owner: engineering
 
       spec:
          containers:
          - name: bgg-app
-           image: stackupiss/bgg-app:v1
-           resources:
-             requests:
-               cpu: 100m
+           image: stackupiss/bgg-app:v2
            imagePullPolicy: Always
            env: 
            - name: APP_PORT

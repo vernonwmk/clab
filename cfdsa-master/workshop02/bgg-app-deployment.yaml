@@ -10,7 +10,6 @@ spec:
    selector:
       matchLabels:
          app.kubernetes.io/name: bgg-app-pod
-         app.kubernetes.io/version: "v1"
 
    template:
       metadata:
