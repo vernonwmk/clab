@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: bgg-app-mapping
+  namespace: workshop02
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+spec:
+  backend:
+    serviceName: bgg-app-svc-v2
+    servicePort: 8080
+  rules:
+  - http:
+      paths:
+      - path: /v1
+        backend:
+          serviceName: bgg-app-svc
+          servicePort: 80
+      - path: /
+        backend:
+          serviceName: bgg-app-svc-v2
+          servicePort: 8080
